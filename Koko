@@ -1,0 +1,20 @@
+local fruit = script.Parent -- The fruit part
+local isCollected = false
+
+local function onTouch(other)
+    local player = game.Players:GetPlayerFromCharacter(other.Parent)
+    if player and not isCollected then
+        isCollected = true
+        fruit:Destroy() -- Remove fruit from the game
+        player:FindFirstChild("leaderstats").Fruits.Value += 1 -- Increase player's fruit count
+
+        -- Optional: Grant a random ability
+        local abilities = {"Fire", "Ice", "Lightning"} -- Example abilities
+        local randomAbility = abilities[math.random(1, #abilities)]
+        player:FindFirstChild("Abilities").Value = randomAbility
+
+        print(player.Name .. " collected a fruit and gained " .. randomAbility .. " ability!")
+    end
+end
+
+fruit.Touched:Connect(onTouch)
